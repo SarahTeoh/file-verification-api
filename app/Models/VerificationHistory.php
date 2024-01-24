@@ -17,8 +17,7 @@ class VerificationHistory extends Model
     protected $fillable = [
         'user_id',
         'file_type',
-        'result',
-        'timestamp'
+        'result'
     ];
 
     /**
