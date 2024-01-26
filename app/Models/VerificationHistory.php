@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\FileType;
+use App\Enums\VerificationResult;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -24,7 +25,8 @@ class VerificationHistory extends Model
      * @var array<string, string>
      */
     protected $casts = [
-        'file_type' => FileType::class
+        'file_type' => FileType::class,
+        'result' => VerificationResult::class
     ];
 
     /**
