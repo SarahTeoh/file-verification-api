@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Enums\FileType;
@@ -18,7 +20,7 @@ class VerificationHistory extends Model
     protected $fillable = [
         'user_id',
         'file_type',
-        'result'
+        'result',
     ];
 
     /**
@@ -26,7 +28,7 @@ class VerificationHistory extends Model
      */
     protected $casts = [
         'file_type' => FileType::class,
-        'result' => VerificationResult::class
+        'result' => VerificationResult::class,
     ];
 
     /**
