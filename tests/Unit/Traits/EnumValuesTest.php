@@ -5,7 +5,8 @@ declare(strict_types=1);
 use App\Traits\EnumValues;
 
 it('returns the correct values', function () {
-    enum FakeEnum: string {
+    enum FakeEnum: string
+    {
         use EnumValues;
 
         case Value1 = 'value1';
