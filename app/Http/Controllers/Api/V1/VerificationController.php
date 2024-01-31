@@ -21,9 +21,7 @@ class VerificationController extends Controller
     ): VerificationResultResource {
         $file = $request->file('file');
 
-        $userId = 1;
-        // TODO: authentication
-        // $userId = Auth::id();
+        $userId = Auth::id();
 
         $verificationResultDto = $handleFileVerification($file->getContent(), (int) $userId);
 

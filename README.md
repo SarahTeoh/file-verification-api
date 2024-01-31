@@ -111,7 +111,7 @@ Note: There is no `/signup` endpoint to prevent unauthorized signups. The first 
 ### Technologies Used
 * [Laravel](https://laravel.com/): PHP Framework for web application
 * [Pest](https://pestphp.com/): PHP testing framework
-* [MySQL](https://www.mysql.com/): Databse
+* [MySQL](https://www.mysql.com/): Database
 * [SQLite](https://www.sqlite.org/index.html) Database for testing.
 * [Docker](https://www.docker.com/): This makes collaborative development easy.
 * [Scribe](https://scribe.knuckles.wtf/laravel/): This helps generate API documentation for humans from Laravel codebase.
