@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Enums\HttpResponseCode;
+use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('/verify', VerificationController::class);
+Route::middleware('auth:sanctum')->post('/verify', VerificationController::class);
+Route::post('/login', LoginController::class);
 
 Route::fallback(function () {
     return response()->json([

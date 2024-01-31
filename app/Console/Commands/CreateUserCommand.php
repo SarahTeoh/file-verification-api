@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Models\User;
@@ -42,14 +44,15 @@ class CreateUserCommand extends Command
             foreach ($validator->errors()->all() as $error) {
                 $this->error($error);
             }
+
             return -1;
         }
 
         $user['password'] = Hash::make($user['password']);
         User::create($user);
 
-        $this->info('User ' . $user['email'] . ' created successfully');
-        
+        $this->info('User '.$user['email'].' created successfully');
+
         return 0;
     }
 }

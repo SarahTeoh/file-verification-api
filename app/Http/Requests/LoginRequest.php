@@ -4,11 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
-use App\Enums\FileType;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules\File;
 
-class FileVerificationRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,11 +24,8 @@ class FileVerificationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'file' => [
-                'required',
-                File::types(FileType::values())
-                    ->max('2mb'),
-            ],
+            'email' => ['required', 'string', 'email'],
+            'password' => ['required', 'string'],
         ];
     }
 }
