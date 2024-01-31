@@ -1,66 +1,117 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# File Verification API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Table of Contents
+- [File Verification API](#file-verification-api)
+    - [Table of Contents](#table-of-contents)
+    - [Introduction](#introduction)
+    - [Features](#features)
+    - [Setup Guide](#setup-guide)
+      - [Pre-requisites](#pre-requisites)
+      - [Steps](#steps)
+    - [Usage](#usage)
+    - [API Endpoints](#api-endpoints)
+    - [Technologies Used](#technologies-used)
+### Introduction
+This repository houses the implementation of a File Verification API. The API is built using Laravel and allows authenticated users to send a JSON file and receive a verification result as a response. Please refer to [this documentation](https://accredify.notion.site/Technical-Assessment-for-Software-Engineer-de808af21ca249ba8f4b2d8f1aaf2a66) for more information about the requirements of the API.
 
-## About Laravel
+### Features
+- Authentication system for users.
+- Endpoint for verifying uploaded files with multiple verification logics. 
+  - valid issuer
+  - valid recipient
+  - valid signature
+- Scalable architecture to facilitate easy addition of new verification logics.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Setup Guide
+#### Pre-requisites
+- git
+- docker
+  
+#### Steps
+1. Clone [this repository](https://github.com/SarahTeoh/file-verification-api).
+    ```
+    $ git clone https://github.com/SarahTeoh/file-verification-api.git
+    ```
+2. Navigate to the project directory
+    ```
+    $ cd file-verification-api
+    ```
+3. Create `.env` file
+    ```
+    $ cp .env.example .env
+    ```
+4. Update `.env` file content 
+   * update the environment variables such as database credentials and port number.
+   * the default database settings are as follows:
+    ```
+    DB_CONNECTION=mysql
+    DB_HOST=mysql
+    DB_PORT=3306
+    DB_DATABASE=laravel
+    ```
+   * you may need to change the port number `3306` if any port number conflicts occur in your environment. In such case, you should also change the [port binding in docker-compose.yaml](https://github.com/SarahTeoh/file-verification-api/blob/main/docker-compose.yml#L35) accordingly.
+5. Create the `.env.testing` file for testing environment
+   ```
+   $ cp .env .env.testing
+   ```
+6. Update the `.env.testing` file
+    ```
+    DB_CONNECTION=sqlite
+    DB_DATABASE=:memory:
+    ```
+7. Build and run the application
+    ```
+    $ docker-compose up -d --build // build the docker containers
+    $ docker-compose exec app bash // access the docker container
+    $ php artisan serve
+    ```
+    At this point, you should see something like this in your terminal:
+    ```
+    INFO  Server running on [http://127.0.0.1:8080]. 
+    ```
+    This means that application server is running.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Usage
+1. access the docker container
+    ```
+    $ docker-compose exec app bash
+    ```
+2. Create user using artisan command
+    ```
+    $ php artisan users:create
+    ```
+    Follows the instructions. For example:
+    ```
+    root@575cd53c4ac7:/var/www/html# php artisan users:create
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    Name of the new user:
+    > user
 
-## Learning Laravel
+    Email of the new user:
+    > user@example.com
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    Password of the new user:
+    > ********
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    User user@example.com created successfully
+    ```
+    
+3. Access the API documentation at `http://127.0.0.1:8080/api/v1/docs`
+ 
+4. Connect to the API using POSTMAN as documented in the documentation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### API Endpoints
+| HTTP Verbs | Endpoints | Action |
+| --- | --- | --- |
+| POST | /api/v1/login | To login and get API token |
+| POST | /api/v1/verify | To verify a file |
 
-## Laravel Sponsors
+Note: There is no `/signup` endpoint to prevent unauthorized signups. The first user can be created using command-line tools.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### Technologies Used
+* [Laravel](https://laravel.com/): PHP Framework for web application
+* [Pest](https://pestphp.com/): PHP testing framework
+* [MySQL](https://www.mysql.com/): Databse
+* [SQLite](https://www.sqlite.org/index.html) Database for testing.
+* [Docker](https://www.docker.com/): This makes collaborative development easy.
+* [Scribe](https://scribe.knuckles.wtf/laravel/): This helps generate API documentation for humans from Laravel codebase.
