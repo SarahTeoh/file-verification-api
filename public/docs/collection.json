@@ -1,0 +1,143 @@
+{
+    "variable": [
+        {
+            "id": "baseUrl",
+            "key": "baseUrl",
+            "type": "string",
+            "name": "string",
+            "value": "http:\/\/127.0.0.1:8080\/api\/v1\/"
+        }
+    ],
+    "info": {
+        "name": "Document Verification API",
+        "_postman_id": "4f95f131-fe53-4c7a-a784-f81653d6dfd4",
+        "description": "A REST API with Laravel where an authenticated user sends a JSON file and receives a verification result as a response",
+        "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
+    },
+    "item": [
+        {
+            "name": "Endpoints",
+            "description": "",
+            "item": [
+                {
+                    "name": "POST Login",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/login",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/login"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application\/json"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\"email\":\"jshields@example.com\",\"password\":\")u=BY4\"}"
+                        },
+                        "description": "This endpoint logs you in and returns API token.",
+                        "auth": {
+                            "type": "noauth"
+                        }
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n \"access_token\": \"<YOUR-AUTH-KEY>\"\n}.",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 422,
+                            "body": "{\"message\": \"The provided credentials are incorrect\"}",
+                            "name": "wrong login credentials"
+                        }
+                    ]
+                },
+                {
+                    "name": "POST Verifies the file.",
+                    "request": {
+                        "url": {
+                            "host": "{{baseUrl}}",
+                            "path": "api\/v1\/verify",
+                            "query": [],
+                            "raw": "{{baseUrl}}\/api\/v1\/verify"
+                        },
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "multipart\/form-data"
+                            },
+                            {
+                                "key": "Accept",
+                                "value": "application\/json"
+                            }
+                        ],
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "src": [],
+                                    "type": "file"
+                                }
+                            ]
+                        },
+                        "description": "This endpoint lets you verify your file.\n\nA JSON file is considered as \u201cverified\u201d when it fulfils the following three conditions:\n1. The file has a valid issuer.\n2. The file has a valid recipient.\n3. The file has a valid signature.\n\nThis endpoint return a 200 status code even if the file is not verified"
+                    },
+                    "response": [
+                        {
+                            "header": [],
+                            "code": 200,
+                            "body": "{\n \"data\": {\n \"issuer\": \"Issuer name\",\n \"result\": \"verified\" \/\/ values can be \"verified\", \"invalid_recipient\", \"invalid_issuer\", \"invalid_signature\"\n  }\n}.",
+                            "name": ""
+                        },
+                        {
+                            "header": [],
+                            "code": 404,
+                            "body": "{\"message\": \"Page Not Found. If error persists, contact info@website.com\"}",
+                            "name": "Something went wrong during verification process"
+                        },
+                        {
+                            "header": [],
+                            "code": 500,
+                            "body": "{\"message\": \"Failed to encode Json\"} or {\"message\": \"Failed to decode Json\"} or {\"message\": \"Failed to hash signature\"}",
+                            "name": "Failure to encode\/decode Json file or hashing signature hash of the file"
+                        },
+                        {
+                            "header": [],
+                            "code": 502,
+                            "body": "{\"message\": \"Invalid DNS response\"}",
+                            "name": "Google DNS API returns invalid response"
+                        },
+                        {
+                            "header": [],
+                            "code": 503,
+                            "body": "{\"message\": \"Failed to lookup DNS\"}",
+                            "name": "Failed to lookup DNS using Google DNS API"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "type": "string"
+            }
+        ]
+    }
+}

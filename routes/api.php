@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->post('/verify', VerificationController::class);
 Route::post('/login', LoginController::class);
+Route::middleware('auth:sanctum')->post('/verify', VerificationController::class);
 
 Route::fallback(function () {
     return response()->json([

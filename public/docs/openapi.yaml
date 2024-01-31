@@ -1,0 +1,141 @@
+openapi: 3.0.3
+info:
+  title: 'Document Verification API'
+  description: 'A REST API with Laravel where an authenticated user sends a JSON file and receives a verification result as a response'
+  version: 1.0.0
+servers:
+  -
+    url: 'http://127.0.0.1:8080/api/v1'
+paths:
+  /api/v1/login:
+    post:
+      summary: 'POST Login'
+      operationId: pOSTLogin
+      description: 'This endpoint logs you in and returns API token.'
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n \"access_token\": \"<YOUR-AUTH-KEY>\"\n}."
+        422:
+          description: 'wrong login credentials'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'The provided credentials are incorrect'
+                properties:
+                  message:
+                    type: string
+                    example: 'The provided credentials are incorrect'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: email
+                  description: 'The email to login.'
+                  example: jshields@example.com
+                password:
+                  type: string
+                  description: 'The password to login.'
+                  example: )u=BY4
+              required:
+                - email
+                - password
+      security: []
+  /api/v1/verify:
+    post:
+      summary: 'POST Verifies the file.'
+      operationId: pOSTVerifiesTheFile
+      description: "This endpoint lets you verify your file.\n\nA JSON file is considered as “verified” when it fulfils the following three conditions:\n1. The file has a valid issuer.\n2. The file has a valid recipient.\n3. The file has a valid signature.\n\nThis endpoint return a 200 status code even if the file is not verified"
+      parameters: []
+      responses:
+        200:
+          description: ''
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "{\n \"data\": {\n \"issuer\": \"Issuer name\",\n \"result\": \"verified\" // values can be \"verified\", \"invalid_recipient\", \"invalid_issuer\", \"invalid_signature\"\n  }\n}."
+        404:
+          description: 'Something went wrong during verification process'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Page Not Found. If error persists, contact info@website.com'
+                properties:
+                  message:
+                    type: string
+                    example: 'Page Not Found. If error persists, contact info@website.com'
+        500:
+          description: 'Failure to encode/decode Json file or hashing signature hash of the file'
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: '{"message": "Failed to encode Json"} or {"message": "Failed to decode Json"} or {"message": "Failed to hash signature"}'
+        502:
+          description: 'Google DNS API returns invalid response'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Invalid DNS response'
+                properties:
+                  message:
+                    type: string
+                    example: 'Invalid DNS response'
+        503:
+          description: 'Failed to lookup DNS using Google DNS API'
+          content:
+            application/json:
+              schema:
+                type: object
+                example:
+                  message: 'Failed to lookup DNS'
+                properties:
+                  message:
+                    type: string
+                    example: 'Failed to lookup DNS'
+      tags:
+        - Endpoints
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: 'The file to be verified.'
+              required:
+                - file
+tags:
+  -
+    name: Endpoints
+    description: ''
+components:
+  securitySchemes:
+    default:
+      type: http
+      scheme: bearer
+      description: 'You can retrieve your token by loggin in via `api/v1/login` endpoint.'
+security:
+  -
+    default: []
