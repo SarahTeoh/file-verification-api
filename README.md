@@ -1,4 +1,16 @@
 # File Verification API
+
+### Table of Contents
+- [File Verification API](#file-verification-api)
+    - [Table of Contents](#table-of-contents)
+    - [Introduction](#introduction)
+    - [Features](#features)
+    - [Setup Guide](#setup-guide)
+      - [Pre-requisites](#pre-requisites)
+      - [Steps](#steps)
+    - [Usage](#usage)
+    - [API Endpoints](#api-endpoints)
+    - [Technologies Used](#technologies-used)
 ### Introduction
 This repository houses the implementation of a File Verification API. The API is built using Laravel and allows authenticated users to send a JSON file and receive a verification result as a response. Please refer to [this documentation](https://accredify.notion.site/Technical-Assessment-for-Software-Engineer-de808af21ca249ba8f4b2d8f1aaf2a66) for more information about the requirements of the API.
 
@@ -61,14 +73,14 @@ This repository houses the implementation of a File Verification API. The API is
 
 ### Usage
 1. access the docker container
-  ```
-  $ docker-compose exec app bash
-  ```
+    ```
+    $ docker-compose exec app bash
+    ```
 2. Create user using artisan command
-  ```
-  $ php artisan users:create
-  ```
-  Follows the instructions. For example:
+    ```
+    $ php artisan users:create
+    ```
+    Follows the instructions. For example:
     ```
     root@575cd53c4ac7:/var/www/html# php artisan users:create
 
@@ -83,8 +95,9 @@ This repository houses the implementation of a File Verification API. The API is
 
     User user@example.com created successfully
     ```
-
-3. Access the API documentation `http://127.0.0.1:8080/api/v1/docs`
+    
+3. Access the API documentation at `http://127.0.0.1:8080/api/v1/docs`
+ 
 4. Connect to the API using POSTMAN as documented in the documentation
 
 ### API Endpoints
@@ -96,9 +109,9 @@ This repository houses the implementation of a File Verification API. The API is
 Note: There is no `/signup` endpoint to prevent unauthorized signups. The first user can be created using command-line tools.
 
 ### Technologies Used
-* [Laravel](https://laravel.com/) PHP Framework for web application
-* [Pest](https://pestphp.com/) PHP testing framework
-* [MySQL](https://www.mysql.com/) Databse
+* [Laravel](https://laravel.com/): PHP Framework for web application
+* [Pest](https://pestphp.com/): PHP testing framework
+* [MySQL](https://www.mysql.com/): Databse
 * [SQLite](https://www.sqlite.org/index.html) Database for testing.
-* [Docker](https://www.docker.com/) This makes collaborative development easy.
-* [Scribe](https://scribe.knuckles.wtf/laravel/) This helps generate API documentation for humans from Laravel codebase.
+* [Docker](https://www.docker.com/): This makes collaborative development easy.
+* [Scribe](https://scribe.knuckles.wtf/laravel/): This helps generate API documentation for humans from Laravel codebase.
