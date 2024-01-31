@@ -84,7 +84,8 @@ This repository houses the implementation of a File Verification API. The API is
     User user@example.com created successfully
     ```
 
-3. Connect to the API using Postman on port 8080.
+3. Access the API documentation `http://127.0.0.1:8080/api/v1/docs`
+4. Connect to the API using POSTMAN as documented in the documentation
 
 ### API Endpoints
 | HTTP Verbs | Endpoints | Action |
@@ -100,3 +101,4 @@ Note: There is no `/signup` endpoint to prevent unauthorized signups. The first 
 * [MySQL](https://www.mysql.com/) Databse
 * [SQLite](https://www.sqlite.org/index.html) Database for testing.
 * [Docker](https://www.docker.com/) This makes collaborative development easy.
+* [Scribe](https://scribe.knuckles.wtf/laravel/) This helps generate API documentation for humans from Laravel codebase.
